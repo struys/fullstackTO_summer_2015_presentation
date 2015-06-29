@@ -1,7 +1,7 @@
 all: scss
 
 .PHONY: scss
-scss: assets/yelp_reveal.css assets/presentation.css
+scss: assets/pre_commit_reveal.css assets/presentation.css
 
 venv: requirements.txt
 	rm -rf venv && virtualenv venv && . venv/bin/activate && pip install -r requirements.txt

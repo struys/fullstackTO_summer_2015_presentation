@@ -1,9 +1,10 @@
 <!doctype html>
 <html>
     <head>
+        <link href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="bower_components/reveal.js/css/reveal.min.css">
         <link rel="stylesheet" href="bower_components/highlightjs/styles/idea.css">
-        <link rel="stylesheet" href="assets/yelp_reveal.css">
+        <link rel="stylesheet" href="assets/pre_commit_reveal.css">
         <link rel="stylesheet" href="assets/presentation.css">
 
         <!-- If the query includes 'print-pdf', use the PDF print sheet -->
@@ -17,67 +18,151 @@
             <div class="slides">
                 <section>
                     <img src="assets/pre-commit-darwin.png" style="float: left">
-                    <h2>Stop wasting time in code reviews</h2>
-                    <h3>An Introduction to pre-commit</h3>
+                    <h2>Stop wasting time, automate your process</h2>
+                    <p>An introduction to pre-commit</p>
                 </section>
                 <section>
-                    <h3>All too often in code reviews</h3>
+                    <h3>Good Engineering Teams</h3>
                     <ul>
-                        <li>Your indentation is off...</li>
-                        <li>This doesn't conform to pep8...</li>
-                        <li>Your imports are out of order...</li>
-                        <li>blah blah blah blah blah</li>
+                        <li>Write Tests/Documentation</li>
+                        <li>Code Review</li>
+                        <li>Discuss Architecture/Design</li>
+                        <li>Address Legacy</li>
+                        <li>Automate</li>
+                        <li>Move Fast</li>
                     </ul>
                 </section>
                 <section>
-                    <h1 style="color: #c41200">Stop</h1>
+                    <h2>Code Reviews</h2>
                 </section>
                 <section>
-                    <h2>Tools</h2>
+                    <h3>Code Reviews</h3>
+                    <ul>
+                        <li>Ensure Good Long Term Design</li>
+                        <li>Prevent Regressions and Spot Bugs</li>
+                        <li>Share Knowledge About Code</li>
+                        <li class="fragment">... Make sure whitespace is consistent</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Not All Comments Created Equal</h2>
+                    <p>Lots of Feedback != Good Review</p>
+                </section>
+                <section>
+                    <h2>Focus on what affects your business</h2>
+                    <ul>
+                        <li>Find The Bugs/Missing Tests</li>
+                        <li>Discuss Long Term Design</li>
+                        <li>Share Knowledge</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>All Too Often in Code Review</h2>
+                    <ul>
+                        <li>The indentation is off</li>
+                        <li>Your imports are out of order</li>
+                        <li>Remove this debug statement</li>
+                        <li>You’re missing a semicolon</li>
+                        <li>This list should be alphabetical</li>
+                        <li>Please review our styleguide</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Cause It's Important!</h2>
+                    <img style="width:300%;"src="assets/TabsSpacesBoth.png">
+                </section>
+                <section>
+                    <h1>Stop</h1>
+                    <p>Don’t Repeat Yourself, Automate</p>
+                </section>
+                <section>
+                    <h2>Code Styleguides</h2>
+                    <p>A step in the correct but manual direction</p>
+                    <img src="assets/styleguide.png">
+                </section>
+                <section>
+                    <h2>Code Styleguides</h2>
+                    <p>Eventually people stop reading</p>
+                    <img style="height:500px" src="assets/styleguide_toc.png">
+                </section>
+                <section>
+                    <h1>Code Styleguides Don't Scale</h1>
+                </section>
+                <section>
+                    <h2>First To Automate Wins</h2>
+                    <p>until someone automates better</p>
+                </section>
+                <section>
+                    <h2>Use Tools that Exist</h2>
                     <ul>
                         <li>
                             Linters
                             <ul>
-                                <li>flake8, pylint, jshint, scss-lint, ...</li>
+                                <li>jshint, scss-lint, flake8</li>
                             </ul>
                         </li>
                         <li>
                             Fixers
                             <ul>
-                                <li>autopep8, trailing whitespace, end-of-files, encoding markers, import reordering,...</li>
+                                <li>fixmyjs, autopep8, whitespace-fixer</li>
                             </ul>
+                        </li>
+                        <li>
+                            Git Hooks
                         </li>
                     </ul>
                 </section>
                 <section>
-                    <h2>Solution!</h2>
+                    <h2>Git hooks</h2>
+                    <code>$ cat pre-commit.sh > .git/hooks/pre-commit</code>
                 </section>
                 <section>
-                    <h2>git hooks!</h2>
+                    <h2>Example</h2>
+                    <pre><code>ignorejshint=$(git config hooks.ignorejshint)
+if [ "$ignorejshint" != "true" ] && which jshint >/dev/null; then
+    echo "Checking JSHint..."
+    # Run jshint on all touched .js files
+    jshintissues=0
+    for file in $(exec git diff --staged --name-only | grep '\.js$'); do
+    if [[ -e "$file" && ! -h "$file" ]] && ! jshint "$file"; then
+        jshintissues=1
+    fi
+    done
+
+    if [ $jshintissues == 1 ]; then
+        echo "JShint reported issues."
+        exit 1
+    fi
+fi</code></pre>
                 </section>
                 <section>
                     <h2>Problems</h2>
                     <ul>
-                        <li>Large hardcoded bash script</li>
-                        <li>System dependencies</li>
-                        <li>Locked to one language</li>
-                        <li>Consistency</li>
+                        <li>Eventually a giant bash script</li>
+                        <li>System level dependencies</li>
+                        <li>Probably a single language</li>
+                        <li>Not shared across projects</li>
                     </ul>
                 </section>
                 <section>
-                    <h2>pre-commit solves this!</h2>
+                    <h2>pre-commit</h2>
+                    <p>A Package Manager for Multi-Language Pre-commit Hooks</p>
                 </section>
                 <section>
-                    <code style="font-size: 2em">$ pip install pre-commit</code>
+                    <h2>Installation</h2>
+                    <code style="font-size: 1.5em;">$ pip install pre-commit</code><br>
+                    <br>or<br><br>
+                    <code style="font-size: 1.5em;">$ curl ... | python</code>
                 </section>
                 <section>
-                    Check in a <code style="color: #000">.pre-commit-config.yaml</code>
-                    <pre><code>-   repo: git@github.com:pre-commit/pre-commit-hooks
+                    <h2>Package Management</h2>
+                    <p>Commit <code>.pre-commit-config.yaml</code></p>
+
+<pre><code class="no-highlight">-   repo: git@github.com:pre-commit/pre-commit-hooks
     sha: v0.4.1
     hooks:
     -   id: trailing-whitespace
     -   id: autopep8-wrapper
-    -   id: flake8
 -   repo: git@github.com:asottile/reorder_python_imports
     sha: ea9fa14a757bb210d849de5af8f8ba2c9744027a
     hooks:
@@ -86,25 +171,35 @@
     sha: e86225836aadd058036f47a6de9b0ee0440476eb
     hooks:
     -   id: jshint
-</pre></code>
+</code></pre>
                 </section>
                 <section>
-                    <code style="font-size: 2em">$ pre-commit install</code>
+                    <h2>On Commit Pre-commit</h2>
+                    <code>$ pre-commit run</code><br><br>
+                    <ul>
+                        <li>Download and installs hooks (including the interpreter!)</li>
+                        <li>Runs hooks on staged files that apply</li>
+                        <li>Stops commit if fixer fixed or a linter failed</li>
+                    </ul>
                 </section>
                 <section>
-                    <img src="assets/demo.gif" width="100%" height="100%">
-                </section>
-                <section>
-                    <img src="assets/demo2.gif" width="100%" height="100%">
+                    <h1>Demo!</h1>
                 </section>
                 <section>
                     <h2>Features</h2>
                     <ul>
-                        <li>Python (2+3), Ruby, Node Supported</li>
-                        <li>System binaries also still work</li>
-                        <li>Merge conflicts only check conflicted files</li>
-                        <li>Easy to add new linters</li>
-                        <li>And more!</li>
+                        <li>Python, JavaScript, Ruby</li>
+                        <li>You can use system level binaries</li>
+                        <li>Easy to add open source linters/fixers</li>
+                        <li>Easy to integrate into closed/open source</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>We could use help!</h2>
+                    <ul>
+                        <li>More Language Support</li>
+                        <li>More Parsers</li>
+                        <li>Useful Fixers</li>
                     </ul>
                 </section>
                 <section>
@@ -112,13 +207,12 @@
                     <h2>Thanks!</h2>
                     <ul>
                         <li><a href="http://pre-commit.com">pre-commit.com</a></li>
-                        <li><a href="https://github.com/asottile">github.com/asottile</a></li>
+                        <li><a href="https://github.com/struys">github.com/struys</a></li>
                         <li><a href="http://yelp.com/careers">yelp.com/careers</a></li>
                     </ul>
                 </section>
             </div>
         </div>
-        <span class="yelp-logo"></span>
 
         <script src="bower_components/jquery/jquery.min.js"></script>
         <script src="bower_components/reveal.js/js/reveal.min.js"></script>
