@@ -18,25 +18,93 @@
             <div class="slides">
                 <section>
                     <img src="assets/pre-commit-darwin.png" style="float: left">
-                    <h2>Stop wasting time, automate your process</h2>
-                    <p>An introduction to pre-commit</p>
+                    <h2 style="margin-top: 10%">pre-commit</h2>
+                    <p>@kenstruys</p>
                 </section>
                 <section>
-                    <h3>Good Engineering Teams</h3>
+                    <h2>Hi I'm Ken</h2>
                     <ul>
-                        <li>Write Tests/Documentation</li>
-                        <li>Code Review</li>
-                        <li>Discuss Architecture/Design</li>
-                        <li>Address Legacy</li>
-                        <li>Automate</li>
-                        <li>Move Fast</li>
+                        <li>Yelp Engineer (~ 4 years)</li>
+                        <li>Manager of Webcore</li>
+                        <li>From Toronto</li>
                     </ul>
+                </section>
+                <section>
+                    <h3>Let's talk beyond pre-commit</h3>
+                    <ul>
+                        <li>Modern SE Process</li>
+                        <li>How pre-commit works</li>
+                        <li>Tackling Debt</li>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Cycle For A Website</h3>
+                    <ul>
+                        <li class="fragment">The faster to production the better</li>
+                        <div class="fragment">
+                        <li>Still want to write quality code</li>
+                        <ul>
+                            <li>Design, Code, Build/Test</li>
+                            <li>Review</li>
+                            <li>Deploy, Merge</li>
+                            <li>Repeat</li>
+                        </ul>
+                        </div>
+                    </ul>
+                </section>
+                <section>
+                    <h3>Feature Toggles</h3>
+                    <div class="fragment">
+                    <p>Deploy works still in progress</p>
+                    <pre><code>
+    if(gets_new_design(user_id)) {
+        render_new_design()
+    } else {
+        render_old_design()
+    }
+                    </code></pre>
+                    </div>
+                </section>
+                <section>
+                    <h3>Feature Toggles</h3>
+                    <ul>
+                        <li class="fragment">Team works off master</li>
+                        <li class="fragment">Avoids merge conflicts</li>
+                        <li class="fragment">Allows slow rollout</li>
+                        <li class="fragment">No time/need for manual QA</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Test, Deploy, Merge is fast</h2>
+                    <p>everything else is slow</p>
                 </section>
                 <section>
                     <h2>Code Reviews</h2>
                 </section>
                 <section>
-                    <h3>Code Reviews</h3>
+                    <h2>Code Review are expensive</h2>
+                    <ul>
+                        <li>Lots of companies don't do them</li>
+                        <li>At Yelp, nothing goes to prod without a review</li>
+                        <li>It’s an art, need to educate devs</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>Reviews don't catch everything</h2>
+                    <pre><code>
+    var x= {
+        z:'foo',
+        y: function ()
+        {
+            return
+                'What could be better about this JavaScript?';
+        },
+    };
+
+</code></pre>
+                </section>
+                <section>
+                    <h3>But they're so useful</h3>
                     <ul>
                         <li>Ensure Good Long Term Design</li>
                         <li>Prevent Regressions and Spot Bugs</li>
@@ -57,7 +125,7 @@
                     </ul>
                 </section>
                 <section>
-                    <h2>All Too Often in Code Review</h2>
+                    <h2>Too Often in Reviews</h2>
                     <ul>
                         <li>The indentation is off</li>
                         <li>Your imports are out of order</li>
@@ -72,10 +140,6 @@
                     <img style="width:300%;"src="assets/TabsSpacesBoth.png">
                 </section>
                 <section>
-                    <h1>Stop</h1>
-                    <p>Don’t Repeat Yourself, Automate</p>
-                </section>
-                <section>
                     <h2>Code Styleguides</h2>
                     <p>A step in the correct but manual direction</p>
                     <img src="assets/styleguide.png">
@@ -84,9 +148,6 @@
                     <h2>Code Styleguides</h2>
                     <p>Eventually people stop reading</p>
                     <img style="height:500px" src="assets/styleguide_toc.png">
-                </section>
-                <section>
-                    <h1>Code Styleguides Don't Scale</h1>
                 </section>
                 <section>
                     <h2>First To Automate Wins</h2>
@@ -162,11 +223,8 @@ fi</code></pre>
     sha: v0.4.1
     hooks:
     -   id: trailing-whitespace
-    -   id: autopep8-wrapper
--   repo: git@github.com:asottile/reorder_python_imports
-    sha: ea9fa14a757bb210d849de5af8f8ba2c9744027a
-    hooks:
-    -   id: reorder-python-imports
+    -   id: double-quote-string-fixer
+    -   id: debug-statements
 -   repo: git@github.com:pre-commit/mirrors-jshint
     sha: e86225836aadd058036f47a6de9b0ee0440476eb
     hooks:
@@ -183,19 +241,27 @@ fi</code></pre>
                     </ul>
                 </section>
                 <section>
-                    <h1>Demo!</h1>
+                    <h2>Demo!</h2>
+                </section>
+                <section>
+                    <h2>Transitioning to pre-commit</h2>
+                    <ul>
+                        <li>Change a file, fix the issues</li>
+                        <li>Fixed by someone who knows the code</li>
+                        <li>Overtime everything is fixed</li>
+                    </ul>
                 </section>
                 <section>
                     <h2>Features</h2>
                     <ul>
                         <li>Python, JavaScript, Ruby</li>
-                        <li>You can use system level binaries</li>
+                        <li>Fully featured cli</li>
                         <li>Easy to add open source linters/fixers</li>
                         <li>Easy to integrate into closed/open source</li>
                     </ul>
                 </section>
                 <section>
-                    <h2>We could use help!</h2>
+                    <h2>We need contributions</h2>
                     <ul>
                         <li>More Language Support</li>
                         <li>More Parsers</li>
@@ -203,11 +269,60 @@ fi</code></pre>
                     </ul>
                 </section>
                 <section>
+                    <h2>Tradeoffs</h2>
+                    <ul>
+                        <li>Fixer are the best but are often really simple</li>
+                        <li>Linters are good but slow you down</li>
+                        <li>Sometimes you don't want to block</li>
+                    </ul>
+                </section>
+                <section>
+                    <h2>If you want to fix something, you should track progress</h2>
+                </section>
+                <section>
+                    <h2>git-code-debt</h2>
+                    <p>Metrics for codebase debt</p>
+                </section>
+                <section>
+                    <h2>Developers create a metric</h2>
+                <pre><code>
+    from git_code_debt.metrics.base import SimpleLineCounterBase
+
+
+    class Python__init__LineCount(SimpleLineCounterBase):
+
+        def should_include_file(self, file_diff_stat):
+            return file_diff_stat.filename == b'__init__.py'
+
+        def line_matches_metric(self, line, file_diff_stat):
+            # All lines in __init__.py match
+            return True
+                </code></pre>
+                </section>
+                <section>
+                    <h2>Batch Processing</h2>
+                    <code>$ git-code-debt-create-tables database.db</code><br>
+                    <code>$ git-code-debt-generate &lt;repo&gt; database.db</code>
+                </section>
+                <section>
+                    <h2>Code Debt Site</h2>
+                    <code>$ git-code-debt-server database.db</code>
+                </section>
+                <section><h2>demo!</h2></section>
+                <section>
+                    <h2>Interesting Trends</h2>
+                    <ul>
+                        <li>Systems we dislike don’t disappear over night</li>
+                        <li>Good lesson for engineers</li>
+                        <li>Gets engineers excited about removing debt</li>
+                    </ul>
+                </section>
+                <section>
                     <img src="assets/pre-commit-darwin.png" style="float: left;">
                     <h2>Thanks!</h2>
                     <ul>
                         <li><a href="http://pre-commit.com">pre-commit.com</a></li>
-                        <li><a href="https://github.com/struys">github.com/struys</a></li>
+                        <li><a href="https://github.com/Yelp/git-code-debt">github.com/Yelp/git-code-debt</a></li>
                         <li><a href="http://yelp.com/careers">yelp.com/careers</a></li>
                     </ul>
                 </section>
