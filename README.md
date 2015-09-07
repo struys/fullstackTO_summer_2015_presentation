@@ -1,12 +1,1 @@
-pre-commit-preso
-================
-
-A presentation about http://pre-commit.com
-
-
-Directions:
-
-```
-$ make
-$ firefox index.htm &
-```
+Viewable at http://struys.github.io/fullstackTO_summer_2015_presentation
